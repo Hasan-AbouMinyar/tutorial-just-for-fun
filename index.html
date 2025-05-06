@@ -1,11 +1,468 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hasan Abouminyar - Portfolio</title>
+    <!-- ربط Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- ربط Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ربط Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ربط animate.css للحركات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        /* تخصيصات إضافية */
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #3b82f6;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #3b82f6 }
+        }
+    </style>
 </head>
-<body>
-    <h1>test</h1>
+<body class="bg-gray-50 font-sans">
+    <div id="app">
+        <!-- شريط التنقل -->
+        <nav class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+            <div class="container mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <a href="#" class="text-2xl font-bold flex items-center">
+                            <i class="fas fa-code mr-2"></i>
+                            <span class="animate__animated animate__fadeIn">Hasan</span>
+                        </a>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a v-for="nav in navigation" :href="nav.link" 
+                           class="hover:text-blue-300 transition duration-300"
+                           :class="{'text-blue-300': activeSection === nav.id}"
+                           @click="scrollToSection(nav.id)">
+                           {{ nav.name }}
+                        </a>
+                    </div>
+                    <button @click="toggleMenu" class="md:hidden focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+                <!-- القائمة المتنقلة للجوال -->
+                <div v-if="mobileMenuOpen" class="md:hidden mt-4 pb-4">
+                    <a v-for="nav in navigation" :href="nav.link" 
+                       class="block py-2 hover:text-blue-300"
+                       :class="{'text-blue-300': activeSection === nav.id}"
+                       @click="scrollToSection(nav.id)">
+                       {{ nav.name }}
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- القسم الرئيسي -->
+        <section id="home" class="gradient-bg text-white py-20 md:py-32">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 animate__animated animate__fadeInLeft">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        <span class="typewriter">مرحباً، أنا حسن</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl mb-6 text-blue-200">مطور برمجيات</h2>
+                    <p class="text-lg mb-8">أنا متخصص في تطوير الويب وتصميم واجهات المستخدم التفاعلية باستخدام أحدث التقنيات.</p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="bg-white text-blue-800 px-6 py-3 rounded-full font-semibold hover:bg-blue-100 transition duration-300">
+                            تواصل معي
+                        </a>
+                        <a href="#projects" class="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-800 transition duration-300">
+                            مشاريعي
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 animate__animated animate__fadeInRight">
+                    <img src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Hasan Abouminyar" 
+                         class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover mx-auto shadow-2xl border-4 border-white">
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم المهارات -->
+        <section id="skills" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">مهاراتي التقنية</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div v-for="skill in skills" :key="skill.name" 
+                         class="bg-gray-50 p-6 rounded-xl shadow-md text-center card-hover">
+                        <div class="text-4xl mb-4" :class="skill.iconColor">
+                            <i :class="skill.icon"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-800">{{ skill.name }}</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-blue-600 h-2.5 rounded-full" :style="{width: skill.level + '%'}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم المشاريع -->
+        <section id="projects" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">مشاريعي البرمجية</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div v-for="project in projects" :key="project.id" 
+                         class="bg-white rounded-xl overflow-hidden shadow-lg card-hover">
+                        <img :src="project.image" :alt="project.title" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2 text-gray-800">{{ project.title }}</h3>
+                            <p class="text-gray-600 mb-4">{{ project.description }}</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span v-for="tag in project.tags" 
+                                      class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">
+                                    {{ tag }}
+                                </span>
+                            </div>
+                            <div class="flex space-x-3">
+                                <a :href="project.demoUrl" target="_blank" 
+                                   class="text-blue-600 hover:text-blue-800">
+                                    <i class="fas fa-external-link-alt"></i> عرض
+                                </a>
+                                <a :href="project.codeUrl" target="_blank" 
+                                   class="text-gray-600 hover:text-gray-800">
+                                    <i class="fab fa-github"></i> الكود
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الخبرات -->
+        <section id="experience" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800">خبراتي العملية</h2>
+                <div class="relative">
+                    <!-- الخط الزمني -->
+                    <div class="border-l-2 border-blue-500 absolute h-full left-1/2 transform -translate-x-1/2"></div>
+                    
+                    <!-- خبرة 1 -->
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="order-1 w-5/12 px-4 py-4">
+                            <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+                                <h3 class="text-xl font-semibold text-gray-800">مطور ويب</h3>
+                                <h4 class="text-blue-600 mb-2">شركة التقنية الحديثة</h4>
+                                <p class="text-gray-600">2022 - الحاضر</p>
+                                <p class="mt-2 text-gray-700">تطوير تطبيقات ويب متكاملة باستخدام Vue.js و Laravel</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- خبرة 2 -->
+                    <div class="mb-8 flex justify-between items-center w-full left-timeline">
+                        <div class="order-1 w-5/12 px-4 py-4">
+                            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                                <h3 class="text-xl font-semibold text-gray-800">مبرمج متدرب</h3>
+                                <h4 class="text-blue-600 mb-2">جامعة طرابلس</h4>
+                                <p class="text-gray-600">2020 - 2022</p>
+                                <p class="mt-2 text-gray-700">تطوير تطبيقات تعليمية وإدارة قواعد البيانات</p>
+                            </div>
+                        </div>
+                        <div class="order-1 w-5/12"></div>
+                    </div>
+                    
+                    <!-- خبرة 3 -->
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="order-1 w-5/12 px-4 py-4">
+                            <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+                                <h3 class="text-xl font-semibold text-gray-800">مطور مستقل</h3>
+                                <h4 class="text-blue-600 mb-2">العمل الحر</h4>
+                                <p class="text-gray-600">2018 - 2020</p>
+                                <p class="mt-2 text-gray-700">تصميم وتطوير مواقع الويب للعملاء</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم التواصل -->
+        <section id="contact" class="py-20 gradient-bg text-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">تواصل معي</h2>
+                <div class="flex flex-col md:flex-row gap-10">
+                    <div class="md:w-1/2">
+                        <form @submit.prevent="submitForm" class="space-y-6">
+                            <div>
+                                <label for="name" class="block mb-2">الاسم الكامل</label>
+                                <input type="text" id="name" v-model="form.name" 
+                                       class="w-full px-4 py-3 rounded-lg bg-blue-900 bg-opacity-30 border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2">البريد الإلكتروني</label>
+                                <input type="email" id="email" v-model="form.email" 
+                                       class="w-full px-4 py-3 rounded-lg bg-blue-900 bg-opacity-30 border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="message" class="block mb-2">الرسالة</label>
+                                <textarea id="message" v-model="form.message" rows="5"
+                                       class="w-full px-4 py-3 rounded-lg bg-blue-900 bg-opacity-30 border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            </div>
+                            <button type="submit" 
+                                    class="bg-white text-blue-800 px-8 py-3 rounded-full font-semibold hover:bg-blue-100 transition duration-300">
+                                إرسال الرسالة
+                            </button>
+                        </form>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-blue-900 bg-opacity-30 p-8 rounded-xl h-full">
+                            <h3 class="text-2xl font-semibold mb-6">معلومات التواصل</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-envelope mt-1 mr-4 text-blue-300"></i>
+                                    <div>
+                                        <h4 class="font-semibold">البريد الإلكتروني</h4>
+                                        <a href="mailto:h.abouminyar@uot.edu.ly" class="text-blue-200 hover:text-white">h.abouminyar@uot.edu.ly</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-phone-alt mt-1 mr-4 text-blue-300"></i>
+                                    <div>
+                                        <h4 class="font-semibold">الهاتف</h4>
+                                        <a href="tel:0924214929" class="text-blue-200 hover:text-white">0924214929</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fab fa-github mt-1 mr-4 text-blue-300"></i>
+                                    <div>
+                                        <h4 class="font-semibold">GitHub</h4>
+                                        <a href="https://github.com/yourusername" target="_blank" class="text-blue-200 hover:text-white">github.com/yourusername</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fab fa-linkedin mt-1 mr-4 text-blue-300"></i>
+                                    <div>
+                                        <h4 class="font-semibold">LinkedIn</h4>
+                                        <a href="https://linkedin.com/in/yourusername" target="_blank" class="text-blue-200 hover:text-white">linkedin.com/in/yourusername</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- الفوتر -->
+        <footer class="bg-gray-900 text-white py-8">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-2xl font-bold flex items-center">
+                            <i class="fas fa-code mr-2"></i>
+                            Hasan Abouminyar
+                        </h3>
+                        <p class="text-gray-400 mt-2">مطور برمجيات متخصص في تطوير الويب</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2023 Hasan Abouminyar. جميع الحقوق محفوظة.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- زر العودة للأعلى -->
+        <button v-if="showBackToTop" @click="scrollToTop" 
+                class="fixed bottom-8 right-8 bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition duration-300">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- تطبيق Vue.js -->
+    <script>
+        const { createApp, ref, onMounted, onUnmounted } = Vue;
+
+        createApp({
+            setup() {
+                // حالة القائمة المتنقلة للجوال
+                const mobileMenuOpen = ref(false);
+                
+                // حالة النموذج
+                const form = ref({
+                    name: '',
+                    email: '',
+                    message: ''
+                });
+                
+                // حالة القسم النشط
+                const activeSection = ref('home');
+                
+                // حالة زر العودة للأعلى
+                const showBackToTop = ref(false);
+                
+                // بيانات التنقل
+                const navigation = ref([
+                    { id: 'home', name: 'الرئيسية', link: '#home' },
+                    { id: 'skills', name: 'المهارات', link: '#skills' },
+                    { id: 'projects', name: 'المشاريع', link: '#projects' },
+                    { id: 'experience', name: 'الخبرات', link: '#experience' },
+                    { id: 'contact', name: 'التواصل', link: '#contact' }
+                ]);
+                
+                // بيانات المهارات
+                const skills = ref([
+                    { name: 'Vue.js', icon: 'fab fa-vuejs', iconColor: 'text-green-500', level: 90 },
+                    { name: 'JavaScript', icon: 'fab fa-js', iconColor: 'text-yellow-500', level: 85 },
+                    { name: 'HTML/CSS', icon: 'fab fa-html5', iconColor: 'text-orange-500', level: 95 },
+                    { name: 'Tailwind CSS', icon: 'fas fa-paint-brush', iconColor: 'text-blue-400', level: 80 },
+                    { name: 'Node.js', icon: 'fab fa-node-js', iconColor: 'text-green-600', level: 75 },
+                    { name: 'Git', icon: 'fab fa-git-alt', iconColor: 'text-red-500', level: 85 },
+                    { name: 'PHP', icon: 'fab fa-php', iconColor: 'text-purple-500', level: 70 },
+                    { name: 'Laravel', icon: 'fab fa-laravel', iconColor: 'text-red-400', level: 75 }
+                ]);
+                
+                // بيانات المشاريع
+                const projects = ref([
+                    {
+                        id: 1,
+                        title: 'نظام إدارة المحتوى',
+                        description: 'نظام متكامل لإدارة المحتوى مع لوحة تحكم قوية',
+                        tags: ['Vue.js', 'Laravel', 'Tailwind'],
+                        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+                        demoUrl: '#',
+                        codeUrl: '#'
+                    },
+                    {
+                        id: 2,
+                        title: 'متجر إلكتروني',
+                        description: 'متجر إلكتروني مع نظام دفع وتتبع الطلبات',
+                        tags: ['Vue.js', 'Node.js', 'MongoDB'],
+                        image: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+                        demoUrl: '#',
+                        codeUrl: '#'
+                    },
+                    {
+                        id: 3,
+                        title: 'تطبيق الطقس',
+                        description: 'تطبيق يعرض حالة الطقس باستخدام API',
+                        tags: ['Vue.js', 'API', 'Tailwind'],
+                        image: 'https://images.unsplash.com/photo-1601134467661-3d775b999c8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1375&q=80',
+                        demoUrl: '#',
+                        codeUrl: '#'
+                    }
+                ]);
+                
+                // دالة إرسال النموذج
+                const submitForm = () => {
+                    alert(`شكراً ${form.value.name}، تم استلام رسالتك وسنقوم بالرد عليك قريباً!`);
+                    form.value = { name: '', email: '', message: '' };
+                };
+                
+                // دالة تبديل القائمة المتنقلة
+                const toggleMenu = () => {
+                    mobileMenuOpen.value = !mobileMenuOpen.value;
+                };
+                
+                // دالة التمرير إلى قسم معين
+                const scrollToSection = (sectionId) => {
+                    mobileMenuOpen.value = false;
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        window.scrollTo({
+                            top: section.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                };
+                
+                // دالة التمرير إلى الأعلى
+                const scrollToTop = () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                };
+                
+                // دالة التعامل مع حدث التمرير
+                const handleScroll = () => {
+                    // التحقق من زر العودة للأعلى
+                    showBackToTop.value = window.scrollY > 300;
+                    
+                    // تحديد القسم النشط
+                    const sections = document.querySelectorAll('section');
+                    let currentSection = '';
+                    
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop - 100;
+                        if (window.scrollY >= sectionTop) {
+                            currentSection = section.id;
+                        }
+                    });
+                    
+                    activeSection.value = currentSection || 'home';
+                };
+                
+                // إضافة مستمع حدث التمرير عند تركيب المكون
+                onMounted(() => {
+                    window.addEventListener('scroll', handleScroll);
+                    handleScroll(); // تنفيذ مرة أولى لتحديد القسم النشط
+                });
+                
+                // إزالة مستمع حدث التمرير عند إلغاء تركيب المكون
+                onUnmounted(() => {
+                    window.removeEventListener('scroll', handleScroll);
+                });
+                
+                // تصدير المتغيرات والدوال
+                return {
+                    mobileMenuOpen,
+                    form,
+                    activeSection,
+                    showBackToTop,
+                    navigation,
+                    skills,
+                    projects,
+                    submitForm,
+                    toggleMenu,
+                    scrollToSection,
+                    scrollToTop
+                };
+            }
+        }).mount('#app');
+    </script>
 </body>
 </html>
