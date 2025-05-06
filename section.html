@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV+ Style Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .gallery-section {
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 0 50px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+        }
+        
+        .gallery-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            will-change: transform;
+        }
+        
+        .gallery-item {
+            min-width: 90vw;
+            padding: 0 5vw;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item-content {
+            position: relative;
+            height: 70vh;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .item-info {
+            max-width: 600px;
+            z-index: 2;
+        }
+        
+        .item-logo {
+            max-width: 300px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+        
+        .item-description {
+            margin-bottom: 25px;
+            font-size: 18px;
+            line-height: 1.4;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+        
+        .item-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .item-genre {
+            margin-right: 15px;
+            position: relative;
+        }
+        
+        .item-genre:after {
+            content: "·";
+            margin-left: 15px;
+        }
+        
+        .item-button {
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .item-button:hover {
+            background: rgba(255,255,255,0.9);
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .nav-button svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+        
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+        
+        .play-pause {
+            position: absolute;
+            right: 50px;
+            top: 50px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+        }
+        
+        .play-pause:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .play-pause svg {
+            width: 16px;
+            height: 16px;
+            fill: #fff;
+        }
+    </style>
+</head>
+<body>
+    <section class="gallery-section">
+        <div class="section-header">
+            <h2 class="section-title">Featured Shows</h2>
+            <button class="play-pause">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="gallery-container">
+            <!-- Item 1 -->
+            <div class="gallery-item" data-bg-color="#1a1a2e">
+                <div class="gallery-item-content" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2056&q=80')">
+                    <div class="item-info">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Apple_TV_plus_logo.svg/1200px-Apple_TV_plus_logo.svg.png" alt="Show Logo" class="item-logo">
+                        <p class="item-description">A brilliant, seductive chef turns to espionage in Napoleon-era France in this thrilling new drama.</p>
+                        <div class="item-meta">
+                            <span class="item-genre">Drama</span>
+                            <span class="item-tagline">New Episode Every Friday</span>
+                        </div>
+                        <button class="item-button">Stream Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 2 -->
+            <div class="gallery-item" data-bg-color="#16213e">
+                <div class="gallery-item-content" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80')">
+                    <div class="item-info">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Apple_TV_plus_logo.svg/1200px-Apple_TV_plus_logo.svg.png" alt="Show Logo" class="item-logo">
+                        <p class="item-description">Seth Rogen dives into the wild chaos of Hollywood in this all-star satire about the entertainment industry.</p>
+                        <div class="item-meta">
+                            <span class="item-genre">Comedy</span>
+                            <span class="item-tagline">New Episode Every Wednesday</span>
+                        </div>
+                        <button class="item-button">Stream Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="gallery-item" data-bg-color="#0f3460">
+                <div class="gallery-item-content" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
+                    <div class="item-info">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Apple_TV_plus_logo.svg/1200px-Apple_TV_plus_logo.svg.png" alt="Show Logo" class="item-logo">
+                        <p class="item-description">A higher power seemingly steers an ex-con's bumpy path to success in this heartfelt comedy.</p>
+                        <div class="item-meta">
+                            <span class="item-genre">Comedy</span>
+                            <span class="item-tagline">Season Finale Now Streaming</span>
+                        </div>
+                        <button class="item-button">Stream Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 4 -->
+            <div class="gallery-item" data-bg-color="#1a3e72">
+                <div class="gallery-item-content" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80')">
+                    <div class="item-info">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Apple_TV_plus_logo.svg/1200px-Apple_TV_plus_logo.svg.png" alt="Show Logo" class="item-logo">
+                        <p class="item-description">After years of running a solid scam, two best friends finally cross the wrong people in this crime drama.</p>
+                        <div class="item-meta">
+                            <span class="item-genre">Crime</span>
+                            <span class="item-tagline">All Episodes Streaming</span>
+                        </div>
+                        <button class="item-button">Stream Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="gallery-nav">
+            <button class="nav-button prev">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path>
+                </svg>
+            </button>
+            <button class="nav-button next">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="gallery-dots">
+            <div class="dot active" data-index="0"></div>
+            <div class="dot" data-index="1"></div>
+            <div class="dot" data-index="2"></div>
+            <div class="dot" data-index="3"></div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const gallery = document.querySelector('.gallery-container');
+            const items = document.querySelectorAll('.gallery-item');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.querySelector('.prev');
+            const nextBtn = document.querySelector('.next');
+            const playPauseBtn = document.querySelector('.play-pause');
+            
+            let currentIndex = 0;
+            let autoScroll = true;
+            let interval;
+            const itemWidth = 100; // 100vw
+            
+            // Set up auto-scroll
+            function startAutoScroll() {
+                interval = setInterval(() => {
+                    if (autoScroll) {
+                        nextSlide();
+                    }
+                }, 5000);
+            }
+            
+            // Initial auto-scroll
+            startAutoScroll();
+            
+            // Update gallery position
+            function updateGallery() {
+                gallery.style.transform = `translateX(-${currentIndex * itemWidth}vw)`;
+                
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+                
+                // Update body background color
+                document.body.style.backgroundColor = items[currentIndex].getAttribute('data-bg-color');
+            }
+            
+            // Next slide
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % items.length;
+                updateGallery();
+            }
+            
+            // Previous slide
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                updateGallery();
+            }
+            
+            // Navigation buttons
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetAutoScroll();
+            });
+            
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetAutoScroll();
+            });
+            
+            // Dot navigation
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    currentIndex = parseInt(dot.getAttribute('data-index'));
+                    updateGallery();
+                    resetAutoScroll();
+                });
+            });
+            
+            // Play/Pause button
+            playPauseBtn.addEventListener('click', () => {
+                autoScroll = !autoScroll;
+                
+                if (autoScroll) {
+                    playPauseBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>';
+                    startAutoScroll();
+                } else {
+                    playPauseBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>';
+                    clearInterval(interval);
+                }
+            });
+            
+            // Reset auto-scroll timer
+            function resetAutoScroll() {
+                clearInterval(interval);
+                if (autoScroll) {
+                    startAutoScroll();
+                }
+            }
+            
+            // Touch/swipe support
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            gallery.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+            
+            gallery.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+            
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) {
+                    nextSlide();
+                    resetAutoScroll();
+                }
+                
+                if (touchEndX > touchStartX + 50) {
+                    prevSlide();
+                    resetAutoScroll();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
