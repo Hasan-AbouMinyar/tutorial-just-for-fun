@@ -1,11 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Apple-Like Interactive Page</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell;
+      background-color: #ffffff;
+      color: #000;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #f8f8f8;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #000;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .hero button {
+      padding: 12px 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      background-color: #000;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .hero button:hover {
+      background-color: #333;
+    }
+
+    .hero img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 40px;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: opacity 0.8s;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+      opacity: 0;
+    }
+  </style>
 </head>
 <body>
-    
+  <div id="app">
+    <header>
+      <div class="logo">MyBrand</div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Support</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <transition name="fade">
+        <div v-if="showHero">
+          <h1>{{ headline }}</h1>
+          <p>{{ subtext }}</p>
+          <button @click="toggleHero">Learn More</button>
+
+          <!-- ضع هنا الصورة الخاصة بك -->
+          <img src="https://www.apple.com/v/home/ba/images/heroes/iphone-15-pro/hero_iphone15pro__i70z9oz3hj2i_large.jpg" alt="Product Image"/>
+        </div>
+      </transition>
+    </section>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const headline = ref("Think Different");
+        const subtext = ref("Innovation that inspires. Designed to impress.");
+        const showHero = ref(true);
+
+        const toggleHero = () => {
+          showHero.value = !showHero.value;
+        };
+
+        return {
+          headline,
+          subtext,
+          showHero,
+          toggleHero
+        };
+      }
+    }).mount("#app");
+  </script>
 </body>
 </html>
