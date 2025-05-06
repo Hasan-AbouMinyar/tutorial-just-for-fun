@@ -1,27 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appfile</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>X-O Game with Vue</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      background: #e0e0e0;
+      font-family: 'SF Pro Display', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #e0e0e0;
+      border-radius: 16px;
+      box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .cell:hover {
+      transform: scale(1.05);
+    }
+
+    .winner {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      color: #444;
+    }
+
+    .reset-button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #d1d1d1;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffffff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div id="app">
-        <div>
-            <label for="goal">This is a label</label>
-            <input type="text" id="goal" v-model="enteredValue">
-            <button @click="addGoal">Add</button>
-        </div>
-        <div>
-            <ul>
-                <li v-for="goal in goals" > {{goal}} </li>
-            </ul>
-        </div>
+  <div id="app">
+    <h1>X - O Game</h1>
+    
+    <div class="board">
+      <div 
+        class="cell" 
+        v-for="(cell, index) in board" 
+        :key="index"
+        @click="makeMove(index)"
+      >
+        {{ cell }}
+      </div>
     </div>
 
-  
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="javascript.js"></script>
+    <div class="winner" v-if="winner">
+      {{ winner }} wins!
+    </div>
+
+    <button class="reset-button" @click="resetGame">Restart</button>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const board = ref(Array(9).fill(""));
+        const currentPlayer = ref("X");
+        const winner = ref(null);
+
+        function makeMove(index) {
+          if (board.value[index] || winner.value) return;
+
+          board.value[index] = currentPlayer.value;
+          checkWinner();
+
+          currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
+        }
+
+        function checkWinner() {
+          const winPatterns = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6],
+          ];
+
+          for (let pattern of winPatterns) {
+            const [a, b, c] = pattern;
+            if (
+              board.value[a] &&
+              board.value[a] === board.value[b] &&
+              board.value[b] === board.value[c]
+            ) {
+              winner.value = board.value[a];
+              return;
+            }
+          }
+        }
+
+        function resetGame() {
+          board.value = Array(9).fill("");
+          currentPlayer.value = "X";
+          winner.value = null;
+        }
+
+        return {
+          board,
+          currentPlayer,
+          winner,
+          makeMove,
+          resetGame
+        };
+      }
+    }).mount("#app");
+  </script>
 </body>
 </html>
