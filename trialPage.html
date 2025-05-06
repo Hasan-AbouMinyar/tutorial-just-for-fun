@@ -1,218 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Interactive Apple-Like Website</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Vue.js CDN -->
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <!-- AOS CSS -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <!-- AOS JS -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background-color: #fff;
-      color: #000;
-      scroll-behavior: smooth;
-    }
-
-    header {
-      padding: 20px 40px;
-      background: #f8f8f8;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    nav a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 100px 20px;
-    }
-
-    .hero img {
-      width: 80%;
-      max-width: 600px;
-      transition: all 0.5s ease;
-    }
-
-    .section {
-      padding: 100px 20px;
-      text-align: center;
-    }
-
-    .hole {
-      background: #e0e0e0;
-      border-radius: 50% 50% 0 0;
-      box-shadow: inset 0 10px 30px rgba(0,0,0,0.2);
-      padding: 80px 20px;
-      margin: 50px auto;
-      max-width: 800px;
-    }
-
-    .cards {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 50px;
-    }
-
-    .card {
-      background: #f3f3f3;
-      box-shadow: 4px 4px 12px #ccc, -4px -4px 12px #fff;
-      border-radius: 20px;
-      padding: 30px;
-      width: 300px;
-      transition: transform 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-    }
-
-    .contact {
-      background: #f9f9f9;
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    .contact input, .contact textarea {
-      width: 80%;
-      max-width: 500px;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-    }
-
-    .contact button {
-      padding: 12px 25px;
-      border: none;
-      border-radius: 20px;
-      background: #000;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #eee;
-      font-size: 0.9rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقعي - مشابه لـ Apple</title>
+    <!-- ربط Vue.js عبر CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- ربط Tailwind CSS للتنسيق (اختياري) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ربط الخطوط أو أي مكتبات أخرى -->
 </head>
 <body>
-  <div id="app">
-    <header>
-      <div><strong>MyAppleClone</strong></div>
-      <nav>
-        <a href="#hero">Home</a>
-        <a href="#hole">Product</a>
-        <a href="#cards">Features</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
+    <div id="app">
+        <!-- شريط التنقل العلوي -->
+        <nav class="bg-gray-900 text-white p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold">Apple</a>
+                <ul class="flex space-x-6">
+                    <li v-for="item in navItems" :key="item.name">
+                        <a :href="item.link" class="hover:text-gray-300">{{ item.name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-      <h1>{{ headline }}</h1>
-      <p>{{ subtext }}</p>
-      <img :src="currentImage" alt="Product Image"/>
-    </section>
+        <!-- قسم الهيرو -->
+        <section class="bg-black text-white py-20">
+            <div class="container mx-auto text-center">
+                <h1 class="text-5xl font-bold mb-4">iPhone 15 Pro</h1>
+                <p class="text-xl mb-8">أحدث تقنيات Apple بين يديك.</p>
+                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full">اشتري الآن</a>
+            </div>
+        </section>
 
-    <!-- Hole Section (3D feel) -->
-    <section class="hole" id="hole" data-aos="fade-up">
-      <h2>{{ productTitle }}</h2>
-      <p>{{ productDesc }}</p>
-    </section>
+        <!-- قسم المنتجات -->
+        <section class="py-16">
+            <div class="container mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12">اكتشف منتجاتنا</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div v-for="product in products" :key="product.id" class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <img :src="product.image" :alt="product.name" class="w-full h-48 object-contain mb-4">
+                        <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+                        <p class="text-gray-600 mb-4">{{ product.description }}</p>
+                        <a :href="product.link" class="text-blue-600 hover:underline">المزيد من التفاصيل</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Cards Section -->
-    <section class="section" id="cards">
-      <h2 data-aos="fade-up">Why Choose Us?</h2>
-      <div class="cards">
-        <div class="card" data-aos="zoom-in" v-for="item in cards" :key="item.title">
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.desc }}</p>
-        </div>
-      </div>
-    </section>
+        <!-- الفوتر -->
+        <footer class="bg-gray-900 text-white py-8">
+            <div class="container mx-auto text-center">
+                <p>&copy; 2023 موقعي. جميع الحقوق محفوظة.</p>
+            </div>
+        </footer>
+    </div>
 
-    <!-- Contact -->
-    <section class="contact" id="contact" data-aos="fade-up">
-      <h2>Contact Us</h2>
-      <input type="text" placeholder="Your Name" /><br />
-      <input type="email" placeholder="Your Email" /><br />
-      <textarea placeholder="Your Message"></textarea><br />
-      <button>Send</button>
-    </section>
+    <!-- تطبيق Vue.js -->
+    <script>
+        const { createApp } = Vue;
 
-    <footer>
-      &copy; 2025 MyAppleClone. All rights reserved.
-    </footer>
-  </div>
-
-  <script>
-    const { createApp, ref, onMounted } = Vue;
-
-    createApp({
-      setup() {
-        const headline = ref("Welcome to Innovation");
-        const subtext = ref("Designed for the future. Inspired by Apple.");
-        const productTitle = ref("SuperDevice Pro");
-        const productDesc = ref("The next generation device. Lightweight. Powerful. Elegant.");
-        
-        const cards = ref([
-          { title: "Fast & Smooth", desc: "Performance that outpaces the competition." },
-          { title: "Stunning Design", desc: "Sleek curves. Premium materials." },
-          { title: "Advanced Tech", desc: "Powered by AI. Built with precision." }
-        ]);
-
-        const images = [
-          "https://www.apple.com/v/home/ba/images/heroes/iphone-15-pro/hero_iphone15pro__i70z9oz3hj2i_large.jpg",
-          "https://www.apple.com/v/home/ba/images/heroes/iphone-15/hero_iphone15_announce__uuemlcwczn6u_large.jpg",
-          "https://www.apple.com/v/home/ba/images/heroes/ipad-pro/hero_ipadpro__bpt7a0d8sh42_large.jpg"
-        ];
-
-        const currentImage = ref(images[0]);
-
-        const handleScroll = () => {
-          const scroll = window.scrollY;
-          const index = Math.min(Math.floor(scroll / 600), images.length - 1);
-          currentImage.value = images[index];
-        };
-
-        onMounted(() => {
-          AOS.init();
-          window.addEventListener("scroll", handleScroll);
-        });
-
-        return {
-          headline,
-          subtext,
-          productTitle,
-          productDesc,
-          cards,
-          currentImage
-        };
-      }
-    }).mount("#app");
-  </script>
+        createApp({
+            data() {
+                return {
+                    navItems: [
+                        { name: "Mac", link: "#" },
+                        { name: "iPad", link: "#" },
+                        { name: "iPhone", link: "#" },
+                        { name: "Watch", link: "#" },
+                        { name: "TV", link: "#" },
+                        { name: "الدعم", link: "#" }
+                    ],
+                    products: [
+                        {
+                            id: 1,
+                            name: "MacBook Pro",
+                            description: "أداء خارق لتحقيق إبداعك.",
+                            image: "https://www.apple.com/v/macbook-pro/ah/images/overview/hero/hero_intro_endframe__e6khcva4hkeq_large.jpg",
+                            link: "#"
+                        },
+                        {
+                            id: 2,
+                            name: "iPhone 15",
+                            description: "تصميم جديد. كاميرات متطورة.",
+                            image: "https://www.apple.com/v/iphone-15/a/images/overview/design/design_1__f2j8i6ygaq6q_large.jpg",
+                            link: "#"
+                        },
+                        {
+                            id: 3,
+                            name: "Apple Watch",
+                            description: "كن أقوى. كن أنشط. كن أفضل.",
+                            image: "https://www.apple.com/v/apple-watch-series-9/a/images/overview/hero/hero__d3i0vprfj3qu_large.jpg",
+                            link: "#"
+                        }
+                    ]
+                };
+            }
+        }).mount('#app');
+    </script>
 </body>
 </html>
