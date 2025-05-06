@@ -11,11 +11,11 @@
         <div>
             <label for="goal">This is a label</label>
             <input type="text" id="goal" v-model="enteredValue">
-            <button>Add</button>
+            <button @click="addGoal">Add</button>
         </div>
         <div>
             <ul>
-
+                <li v-for="goal in goals" > {{goal}} </li>
             </ul>
         </div>
     </div>

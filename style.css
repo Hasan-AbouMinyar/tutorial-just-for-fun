@@ -12,7 +12,7 @@ body {
     padding: 2rem;
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     min-height: 100vh;
 }
 
@@ -66,12 +66,24 @@ button:hover {
     background-color: #005fcc;
 }
 
-.result-box {
+ul {
+    list-style-type: none;
     margin-top: 2rem;
-    padding: 1rem;
+    padding-left: 0;
+}
+
+li {
     background-color: #f1f5f9;
     border-left: 4px solid #007aff;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
     border-radius: 8px;
-    font-size: 1rem;
     color: #333;
+    font-size: 1rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+li:hover {
+    transform: translateX(5px);
+    background-color: #e2e8f0;
 }
