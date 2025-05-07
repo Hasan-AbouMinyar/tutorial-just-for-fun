@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasan Abouminyar - Portfolio</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        appleBlack: '#1D1D1F',
+                        appleLightGray: '#F5F5F7',
+                        appleDarkGray: '#86868B',
+                        appleWhite: '#FBFBFD',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            background-color: #FBFBFD;
+            color: #1D1D1F;
+        }
+        .apple-card {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .apple-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #1D1D1F;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #1D1D1F }
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            right: 0;
+            background-color: #1D1D1F;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        .nav-link.active:after {
+            width: 100%;
+        }
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #1D1D1F;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="bg-white sticky top-0 z-50 border-b border-gray-200">
+            <div class="container mx-auto px-6 py-3">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <a href="#" class="text-xl font-semibold flex items-center">
+                            <span class="animate__animated animate__fadeIn">Hasan</span>
+                        </a>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a v-for="nav in navigation" :href="nav.link" 
+                           class="nav-link text-appleDarkGray hover:text-appleBlack transition duration-300"
+                           :class="{'text-appleBlack active': activeSection === nav.id}"
+                           @click="scrollToSection(nav.id)">
+                           {{ nav.name }}
+                        </a>
+                    </div>
+                    <button @click="toggleMenu" class="md:hidden focus:outline-none">
+                        <i class="fas fa-bars text-xl text-appleBlack"></i>
+                    </button>
+                </div>
+                <!-- Mobile menu -->
+                <div v-if="mobileMenuOpen" class="md:hidden mt-4 pb-4 space-y-3">
+                    <a v-for="nav in navigation" :href="nav.link" 
+                       class="block py-2 text-appleDarkGray hover:text-appleBlack"
+                       :class="{'text-appleBlack': activeSection === nav.id}"
+                       @click="scrollToSection(nav.id)">
+                       {{ nav.name }}
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="py-20 md:py-32 bg-appleWhite">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 animate__animated animate__fadeInLeft">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                        <span class="typewriter">مرحباً، أنا حسن</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl mb-6 text-appleDarkGray">مصمم واجهات وتجربة مستخدم</h2>
+                    <p class="text-lg mb-8 text-appleDarkGray">أصمم وأطور تجارب مستخدم متميزة بلمسة أنيقة وبسيطة.</p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="bg-appleBlack text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition duration-300">
+                            تواصل معي
+                        </a>
+                        <a href="#projects" class="border border-appleBlack text-appleBlack px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition duration-300">
+                            مشاريعي
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 animate__animated animate__fadeInRight">
+                    <img src="https://images.unsplash.com/photo-1580927752452-89d86da3fa0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Hasan Abouminyar" 
+                         class="rounded-xl w-full max-w-md mx-auto shadow-lg">
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">مهاراتي</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div v-for="skill in skills" :key="skill.name" 
+                         class="apple-card p-6 text-center">
+                        <div class="text-4xl mb-4" :class="skill.iconColor">
+                            <i :class="skill.icon"></i>
+                        </div>
+                        <h3 class="text-xl font-medium mb-2">{{ skill.name }}</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-appleBlack h-2 rounded-full" :style="{width: skill.level + '%'}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 bg-appleWhite">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">أعمالي</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div v-for="project in projects" :key="project.id" 
+                         class="apple-card overflow-hidden">
+                        <img :src="project.image" :alt="project.title" class="w-full h-60 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">{{ project.title }}</h3>
+                            <p class="text-appleDarkGray mb-4">{{ project.description }}</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span v-for="tag in project.tags" 
+                                      class="bg-gray-100 text-appleDarkGray text-xs px-3 py-1 rounded-full">
+                                    {{ tag }}
+                                </span>
+                            </div>
+                            <div class="flex space-x-3">
+                                <a :href="project.demoUrl" target="_blank" 
+                                   class="text-appleBlack hover:text-opacity-70">
+                                    <i class="fas fa-external-link-alt"></i> عرض
+                                </a>
+                                <a :href="project.codeUrl" target="_blank" 
+                                   class="text-appleDarkGray hover:text-appleBlack">
+                                    <i class="fab fa-github"></i> الكود
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">خبراتي</h2>
+                <div class="relative max-w-3xl mx-auto">
+                    <!-- Timeline -->
+                    <div class="absolute left-1/2 h-full w-0.5 bg-gray-300 transform -translate-x-1/2"></div>
+                    
+                    <!-- Experience 1 -->
+                    <div class="mb-12 relative">
+                        <div class="timeline-dot"></div>
+                        <div class="ml-0 md:ml-16 pl-8 md:pl-16">
+                            <div class="apple-card p-6">
+                                <h3 class="text-xl font-semibold">مصمم واجهات مستخدم</h3>
+                                <h4 class="text-appleDarkGray mb-2">شركة آبل</h4>
+                                <p class="text-gray-500">2022 - الحاضر</p>
+                                <p class="mt-2 text-appleDarkGray">تصميم واجهات مستخدم لتطبيقات iOS مع الحفاظ على المبادئ التوجيهية لتصميم آبل.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Experience 2 -->
+                    <div class="mb-12 relative">
+                        <div class="timeline-dot"></div>
+                        <div class="ml-0 md:ml-16 pl-8 md:pl-16">
+                            <div class="apple-card p-6">
+                                <h3 class="text-xl font-semibold">مطور واجهات أمامية</h3>
+                                <h4 class="text-appleDarkGray mb-2">استوديو تصميم</h4>
+                                <p class="text-gray-500">2020 - 2022</p>
+                                <p class="mt-2 text-appleDarkGray">تطوير واجهات ويب تفاعلية مع التركيز على البساطة والأداء.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Experience 3 -->
+                    <div class="mb-12 relative">
+                        <div class="timeline-dot"></div>
+                        <div class="ml-0 md:ml-16 pl-8 md:pl-16">
+                            <div class="apple-card p-6">
+                                <h3 class="text-xl font-semibold">مصمم جرافيك</h3>
+                                <h4 class="text-appleDarkGray mb-2">وكالة إعلانية</h4>
+                                <p class="text-gray-500">2018 - 2020</p>
+                                <p class="mt-2 text-appleDarkGray">تصميم هويات بصرية ومواد تسويقية للعملاء.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-appleBlack text-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">تواصل معي</h2>
+                <div class="flex flex-col md:flex-row gap-10">
+                    <div class="md:w-1/2">
+                        <form @submit.prevent="submitForm" class="space-y-6">
+                            <div>
+                                <label for="name" class="block mb-2">الاسم الكامل</label>
+                                <input type="text" id="name" v-model="form.name" 
+                                       class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:border-white">
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2">البريد الإلكتروني</label>
+                                <input type="email" id="email" v-model="form.email" 
+                                       class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:border-white">
+                            </div>
+                            <div>
+                                <label for="message" class="block mb-2">الرسالة</label>
+                                <textarea id="message" v-model="form.message" rows="5"
+                                       class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:border-white"></textarea>
+                            </div>
+                            <button type="submit" 
+                                    class="bg-white text-appleBlack px-8 py-3 rounded-full font-medium hover:bg-opacity-90 transition duration-300">
+                                إرسال الرسالة
+                            </button>
+                        </form>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-gray-900 p-8 rounded-xl h-full">
+                            <h3 class="text-2xl font-semibold mb-6">معلومات التواصل</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-envelope mt-1 mr-4 text-gray-400"></i>
+                                    <div>
+                                        <h4 class="font-medium">البريد الإلكتروني</h4>
+                                        <a href="mailto:h.abouminyar@uot.edu.ly" class="text-gray-300 hover:text-white">h.abouminyar@uot.edu.ly</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-phone-alt mt-1 mr-4 text-gray-400"></i>
+                                    <div>
+                                        <h4 class="font-medium">الهاتف</h4>
+                                        <a href="tel:0924214929" class="text-gray-300 hover:text-white">0924214929</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fab fa-github mt-1 mr-4 text-gray-400"></i>
+                                    <div>
+                                        <h4 class="font-medium">GitHub</h4>
+                                        <a href="https://github.com/yourusername" target="_blank" class="text-gray-300 hover:text-white">github.com/yourusername</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fab fa-linkedin mt-1 mr-4 text-gray-400"></i>
+                                    <div>
+                                        <h4 class="font-medium">LinkedIn</h4>
+                                        <a href="https://linkedin.com/in/yourusername" target="_blank" class="text-gray-300 hover:text-white">linkedin.com/in/yourusername</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-appleBlack text-white py-8 border-t border-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-xl font-semibold">Hasan Abouminyar</h3>
+                        <p class="text-gray-400 mt-1">مصمم واجهات وتجربة مستخدم</p>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-lg">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-lg">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-lg">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white text-lg">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2023 Hasan Abouminyar. جميع الحقوق محفوظة.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Back to Top Button -->
+        <button v-if="showBackToTop" @click="scrollToTop" 
+                class="fixed bottom-8 right-8 bg-appleBlack text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-opacity-90 transition duration-300 border border-gray-700">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted, onUnmounted } = Vue;
+
+        createApp({
+            setup() {
+                const mobileMenuOpen = ref(false);
+                const form = ref({
+                    name: '',
+                    email: '',
+                    message: ''
+                });
+                const activeSection = ref('home');
+                const showBackToTop = ref(false);
+                
+                const navigation = ref([
+                    { id: 'home', name: 'الرئيسية', link: '#home' },
+                    { id: 'skills', name: 'المهارات', link: '#skills' },
+                    { id: 'projects', name: 'الأعمال', link: '#projects' },
+                    { id: 'experience', name: 'الخبرة', link: '#experience' },
+                    { id: 'contact', name: 'التواصل', link: '#contact' }
+                ]);
+                
+                const skills = ref([
+                    { name: 'UI/UX Design', icon: 'fas fa-pencil-ruler', iconColor: 'text-gray-600', level: 95 },
+                    { name: 'Figma', icon: 'fab fa-figma', iconColor: 'text-purple-500', level: 90 },
+                    { name: 'SwiftUI', icon: 'fab fa-apple', iconColor: 'text-gray-400', level: 85 },
+                    { name: 'HTML/CSS', icon: 'fab fa-html5', iconColor: 'text-orange-500', level: 90 },
+                    { name: 'JavaScript', icon: 'fab fa-js', iconColor: 'text-yellow-500', level: 80 },
+                    { name: 'Vue.js', icon: 'fab fa-vuejs', iconColor: 'text-green-500', level: 75 },
+                    { name: 'Adobe CC', icon: 'fas fa-palette', iconColor: 'text-blue-500', level: 85 },
+                    { name: 'Prototyping', icon: 'fas fa-mobile-alt', iconColor: 'text-gray-500', level: 90 }
+                ]);
+                
+                const projects = ref([
+                    {
+                        id: 1,
+                        title: 'تطبيق الموسيقى',
+                        description: 'تصميم واجهة تطبيق موسيقى مستوحى من Apple Music',
+                        tags: ['Figma', 'SwiftUI', 'Prototype'],
+                        image: 'https://images.unsplash.com/photo-1619983081593-e2ba5b543168?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+                        demoUrl: '#',
+                        codeUrl: '#'
+                    },
+                    {
+                        id: 2,
+                        title: 'موقع محفظة أعمال',
+                        description: 'تصميم نظيف وبسيط لموقع محفظة أعمال',
+                        tags: ['UI Design', 'HTML/CSS', 'Responsive'],
+                        image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80',
+                        demoUrl: '#',
+                        codeUrl: '#'
+                    },
+                    {
+                        id: 3,
+                        title: 'نظام إدارة المهام',
+                        description: 'واجهة مستخدم لنظام إدارة المهام اليومية',
+                        tags: ['UX Design', 'Figma', 'User Flow'],
+                        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+                        demoUrl: '#',
+                        codeUrl: '#'
+                    }
+                ]);
+                
+                const submitForm = () => {
+                    alert(`شكراً ${form.value.name}، تم استلام رسالتك وسنقوم بالرد عليك قريباً!`);
+                    form.value = { name: '', email: '', message: '' };
+                };
+                
+                const toggleMenu = () => {
+                    mobileMenuOpen.value = !mobileMenuOpen.value;
+                };
+                
+                const scrollToSection = (sectionId) => {
+                    mobileMenuOpen.value = false;
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        window.scrollTo({
+                            top: section.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                };
+                
+                const scrollToTop = () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                };
+                
+                const handleScroll = () => {
+                    showBackToTop.value = window.scrollY > 300;
+                    
+                    const sections = document.querySelectorAll('section');
+                    let currentSection = '';
+                    
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop - 100;
+                        if (window.scrollY >= sectionTop) {
+                            currentSection = section.id;
+                        }
+                    });
+                    
+                    activeSection.value = currentSection || 'home';
+                };
+                
+                onMounted(() => {
+                    window.addEventListener('scroll', handleScroll);
+                    handleScroll();
+                });
+                
+                onUnmounted(() => {
+                    window.removeEventListener('scroll', handleScroll);
+                });
+                
+                return {
+                    mobileMenuOpen,
+                    form,
+                    activeSection,
+                    showBackToTop,
+                    navigation,
+                    skills,
+                    projects,
+                    submitForm,
+                    toggleMenu,
+                    scrollToSection,
+                    scrollToTop
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
