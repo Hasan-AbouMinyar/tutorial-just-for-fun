@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasan Abouminyar - Portfolio</title>
+    <title>حسن أبو مينيار - مهندس برمجيات</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,10 +11,17 @@
             theme: {
                 extend: {
                     colors: {
-                        appleBlack: '#1D1D1F',
-                        appleLightGray: '#F5F5F7',
-                        appleDarkGray: '#86868B',
-                        appleWhite: '#FBFBFD',
+                        primary: '#1a1a1a',
+                        secondary: '#2a2a2a',
+                        accent: '#3a7bd5',
+                        darkGray: '#86868B',
+                        lightBg: '#f5f5f7',
+                        codeBg: '#1e1e1e',
+                        white: '#ffffff'
+                    },
+                    fontFamily: {
+                        'sans': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                        'mono': ['SF Mono', 'Menlo', 'Monaco', 'Courier New', 'monospace']
                     }
                 }
             }
@@ -24,39 +31,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         body {
-            background-color: #FBFBFD;
-            color: #1D1D1F;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #e5e5e5;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            background-color: #1a1a1a;
         }
-        .apple-card {
-            background: white;
-            border-radius: 18px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        .apple-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        }
-        .typewriter {
+        
+        .full-screen-section {
+            min-height: 100vh;
+            width: 100vw;
+            padding: 80px 5% 0;
+            position: relative;
             overflow: hidden;
-            border-right: .15em solid #1D1D1F;
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
         }
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+        
+        .tech-card {
+            background: #2a2a2a;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #1D1D1F }
+        
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(58, 123, 213, 0.3);
         }
+        
         .nav-link {
             position: relative;
         }
+        
         .nav-link:after {
             content: '';
             position: absolute;
@@ -64,147 +71,303 @@
             height: 2px;
             bottom: -4px;
             right: 0;
-            background-color: #1D1D1F;
+            background-color: #3a7bd5;
             transition: width 0.3s ease;
         }
+        
         .nav-link:hover:after {
             width: 100%;
         }
+        
         .nav-link.active:after {
             width: 100%;
         }
+        
         .timeline-dot {
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: white;
-            border: 3px solid #1D1D1F;
+            background: #2a2a2a;
+            border: 3px solid #3a7bd5;
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             top: 30px;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        
+        .code-bg {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'SF Mono', Menlo, Monaco, 'Courier New', monospace;
         }
         
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #000;
-            color: #fff;
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
         }
         
-        .gallery-section {
-            padding: 60px 0;
-            position: relative;
-            overflow: hidden;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
         }
         
-        .section-header {
-            padding: 0 50px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .project-tag {
+            background-color: rgba(58, 123, 213, 0.2);
+            color: #3a7bd5;
         }
         
         .section-title {
-            font-size: 32px;
-            font-weight: 600;
-        }
-        
-        .gallery-container {
-            display: flex;
-            transition: transform 0.5s ease;
-            will-change: transform;
-        }
-        
-        .gallery-item {
-            min-width: 90vw;
-            padding: 0 5vw;
             position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -8px;
+            right: 0;
+            background-color: #3a7bd5;
+        }
+        
+        .terminal-window {
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-header {
+            height: 30px;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 6px;
+        }
+        
+        .terminal-body {
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+        }
+        
+        .command-line {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .prompt {
+            color: #4EC9B0;
+            margin-left: 10px;
+        }
+        
+        .command {
+            color: #9CDCFE;
+        }
+        
+        .output {
+            color: #D4D4D4;
+            line-height: 1.5;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #3a7bd5;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #3a7bd5 }
+        }
+        
+        .floating-icons {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .floating-icons i {
+            position: absolute;
+            font-size: 24px;
+            color: #3a7bd5;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(10px, 10px); }
+            100% { transform: translate(-10px, -10px); }
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #3a7bd5;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2a5da5;
+        }
+        
+        /* تصميم جديد للمهارات */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-category {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #3a7bd5;
             transition: all 0.3s ease;
         }
         
-        .gallery-item-content {
-            position: relative;
-            height: 70vh;
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 40px;
-            background-size: cover;
-            background-position: center;
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         
-        .item-info {
+        .skill-category h3 {
+            color: #3a7bd5;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .skill-item {
+            margin-bottom: 10px;
+        }
+        
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            color: #e5e5e5;
+        }
+        
+        .skill-bar-container {
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .skill-bar {
+            height: 100%;
+            background: #3a7bd5;
+            border-radius: 3px;
+        }
+        
+        /* تصميم جديد للمشاريع يشبه الأفلام */
+        .projects-showcase {
+            position: relative;
+            overflow: hidden;
+            height: 500px;
+            margin-bottom: 50px;
+        }
+        
+        .project-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+        
+        .project-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .project-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+        }
+        
+        .project-info {
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
             max-width: 600px;
             z-index: 2;
         }
         
-        .item-logo {
-            max-width: 300px;
+        .project-info h3 {
+            font-size: 2.5rem;
             margin-bottom: 20px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            color: white;
         }
         
-        .item-description {
-            margin-bottom: 25px;
-            font-size: 18px;
-            line-height: 1.4;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        .project-info p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #e5e5e5;
         }
         
-        .item-meta {
+        .project-tags {
             display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            font-size: 16px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         
-        .item-genre {
-            margin-right: 15px;
-            position: relative;
+        .project-tag {
+            background: rgba(58, 123, 213, 0.2);
+            color: #3a7bd5;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
         }
         
-        .item-genre:after {
-            content: "·";
-            margin-left: 15px;
-        }
-        
-        .item-button {
-            background: #fff;
-            color: #000;
-            border: none;
-            border-radius: 30px;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .item-button:hover {
-            background: rgba(255,255,255,0.9);
-        }
-        
-        .gallery-nav {
+        .project-nav {
             position: absolute;
             top: 50%;
             width: 100%;
             display: flex;
             justify-content: space-between;
             padding: 0 20px;
-            transform: translateY(-50%);
             z-index: 10;
         }
         
-        .nav-button {
-            background: rgba(255,255,255,0.2);
+        .project-nav button {
+            background: rgba(255,255,255,0.1);
             border: none;
             width: 50px;
             height: 50px;
@@ -213,162 +376,68 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             transition: all 0.2s ease;
         }
         
-        .nav-button:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .nav-button svg {
-            width: 20px;
-            height: 20px;
-            fill: #fff;
-        }
-        
-        .gallery-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            margin: 0 5px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .dot.active {
-            background: #fff;
-            transform: scale(1.2);
-        }
-        
-        .play-pause {
-            position: absolute;
-            right: 50px;
-            top: 50px;
+        .project-nav button:hover {
             background: rgba(255,255,255,0.2);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        }
+        
+        .project-nav button i {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .project-dots {
             display: flex;
-            align-items: center;
             justify-content: center;
+            gap: 10px;
+        }
+        
+        .project-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
             cursor: pointer;
-            backdrop-filter: blur(10px);
             transition: all 0.2s ease;
         }
         
-        .play-pause:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .play-pause svg {
-            width: 16px;
-            height: 16px;
-            fill: #fff;
-        }
-        
-        /* Recommended Section Styles */
-        .recommended-section {
-            padding: 40px 0;
-            margin-top: -20px;
-        }
-        
-        .recommended-title {
-            font-size: 24px;
-            font-weight: 500;
-            padding: 0 50px;
-            margin-bottom: 20px;
-        }
-        
-        .recommended-container {
-            padding: 0 50px;
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Firefox */
-        }
-        
-        .recommended-container::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
-        }
-        
-        .recommended-item {
-            min-width: 200px;
-            scroll-snap-align: start;
-            transition: transform 0.3s ease;
-        }
-        
-        .recommended-item:hover {
-            transform: scale(1.05);
-        }
-        
-        .recommended-poster {
-            width: 100%;
-            aspect-ratio: 2/3;
-            border-radius: 8px;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
-        
-        .recommended-info {
-            padding: 0 5px;
-        }
-        
-        .recommended-name {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .recommended-meta {
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
+        .project-dot.active {
+            background: white;
+            transform: scale(1.2);
         }
     </style>
 </head>
 <body>
     <div id="app">
         <!-- Navigation -->
-        <nav class="bg-white sticky top-0 z-50 border-b border-gray-200">
+        <nav class="bg-primary sticky top-0 z-50 border-b border-gray-800">
             <div class="container mx-auto px-6 py-3">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-4">
-                        <a href="#" class="text-xl font-semibold flex items-center">
+                        <a href="#" class="text-xl font-semibold flex items-center text-white">
                             <span class="animate__animated animate__fadeIn">Hasan</span>
                         </a>
                     </div>
                     <div class="hidden md:flex items-center space-x-8">
                         <a v-for="nav in navigation" :href="nav.link" 
-                           class="nav-link text-appleDarkGray hover:text-appleBlack transition duration-300"
-                           :class="{'text-appleBlack active': activeSection === nav.id}"
+                           class="nav-link text-gray-400 hover:text-white transition duration-300"
+                           :class="{'text-white active': activeSection === nav.id}"
                            @click="scrollToSection(nav.id)">
                            {{ nav.name }}
                         </a>
                     </div>
                     <button @click="toggleMenu" class="md:hidden focus:outline-none">
-                        <i class="fas fa-bars text-xl text-appleBlack"></i>
+                        <i class="fas fa-bars text-xl text-white"></i>
                     </button>
                 </div>
                 <!-- Mobile menu -->
                 <div v-if="mobileMenuOpen" class="md:hidden mt-4 pb-4 space-y-3">
                     <a v-for="nav in navigation" :href="nav.link" 
-                       class="block py-2 text-appleDarkGray hover:text-appleBlack"
-                       :class="{'text-appleBlack': activeSection === nav.id}"
+                       class="block py-2 text-gray-400 hover:text-white"
+                       :class="{'text-white': activeSection === nav.id}"
                        @click="scrollToSection(nav.id)">
                        {{ nav.name }}
                     </a>
@@ -377,222 +446,432 @@
         </nav>
 
         <!-- Hero Section -->
-        <section id="home" class="py-20 md:py-32 bg-appleWhite">
+        <section id="home" class="full-screen-section bg-primary flex items-center">
             <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0 animate__animated animate__fadeInLeft">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                        <span class="typewriter">مرحباً، أنا حسن</span>
+                <div class="md:w-1/2 mb-10 md:mb-0 animate__animated animate__fadeInLeft z-10">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">
+                        <span class="typewriter">مرحباً، أنا حسن أبو مينيار</span>
                     </h1>
-                    <h2 class="text-2xl md:text-3xl mb-6 text-appleDarkGray">مصمم واجهات وتجربة مستخدم</h2>
-                    <p class="text-lg mb-8 text-appleDarkGray">أصمم وأطور تجارب مستخدم متميزة بلمسة أنيقة وبسيطة.</p>
+                    <h2 class="text-2xl md:text-3xl mb-6 text-accent">مهندس برمجيات متخصص</h2>
+                    <p class="text-lg mb-8 text-gray-300">أبني حلول برمجية عالية الجودة مع تركيز على الأداء والتجربة المثالية.</p>
                     <div class="flex space-x-4">
-                        <a href="#contact" class="bg-appleBlack text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition duration-300">
+                        <a href="#contact" class="bg-accent text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition duration-300">
                             تواصل معي
                         </a>
-                        <a href="#projects" class="border border-appleBlack text-appleBlack px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition duration-300">
+                        <a href="#projects" class="border border-white text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-10 hover:bg-white transition duration-300">
                             مشاريعي
                         </a>
                     </div>
                 </div>
-                <div class="md:w-1/2 animate__animated animate__fadeInRight">
-                    <img src="https://images.unsplash.com/photo-1580927752452-89d86da3fa0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                         alt="Hasan Abouminyar" 
-                         class="rounded-xl w-full max-w-md mx-auto shadow-lg">
+                <div class="md:w-1/2 animate__animated animate__fadeInRight z-10">
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-button bg-[#FF5F56]"></div>
+                            <div class="terminal-button bg-[#FFBD2E]"></div>
+                            <div class="terminal-button bg-[#27C93F]"></div>
+                        </div>
+                        <div class="terminal-body code-bg">
+                            <div class="command-line">
+                                <span class="prompt">$</span>
+                                <span class="command">whoami</span>
+                            </div>
+                            <div class="output">Hasan Abouminyar - Software Engineer</div>
+                            
+                            <div class="command-line">
+                                <span class="prompt">$</span>
+                                <span class="command">skills</span>
+                            </div>
+                            <div class="output">JavaScript, Python, Java, Swift, React, Vue, Node.js</div>
+                            
+                            <div class="command-line">
+                                <span class="prompt">$</span>
+                                <span class="command">cat about.txt</span>
+                            </div>
+                            <div class="output">
+                                مهندس برمجيات متخصص في تطوير تطبيقات الويب والجوال.<br>
+                                خبرة 5+ سنوات في بناء أنظمة قابلة للتطوير.<br>
+                                شغوف بحل المشكلات المعقدة وتصميم بنى تحتية فعالة.
+                            </div>
+                            
+                            <div class="command-line">
+                                <span class="prompt">$</span>
+                                <span class="command animate-pulse">_</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Floating code icons -->
+            <div class="floating-icons" style="top: 20%; right: 10%;">
+                <i class="fab fa-js"></i>
+            </div>
+            <div class="floating-icons" style="top: 40%; left: 15%;">
+                <i class="fab fa-python"></i>
+            </div>
+            <div class="floating-icons" style="bottom: 30%; right: 20%;">
+                <i class="fab fa-java"></i>
+            </div>
+            <div class="floating-icons" style="bottom: 20%; left: 25%;">
+                <i class="fab fa-swift"></i>
+            </div>
+            
+            <div class="scroll-indicator">
+                <a href="#skills" @click="scrollToSection('skills')" class="text-gray-400 hover:text-accent">
+                    <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Skills Section - التصميم الجديد -->
+        <section id="skills" class="full-screen-section bg-secondary flex items-center">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center section-title text-white">مهاراتي التقنية</h2>
+                
+                <div class="skills-container">
+                    <!-- قسم لغات البرمجة -->
+                    <div class="skill-category">
+                        <h3><i class="fas fa-code mr-2"></i> لغات البرمجة</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>JavaScript</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Python</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Java</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Swift</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم أطر العمل -->
+                    <div class="skill-category">
+                        <h3><i class="fas fa-cogs mr-2"></i> أطر العمل</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>React.js</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Vue.js</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Node.js</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Django</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم قواعد البيانات -->
+                    <div class="skill-category">
+                        <h3><i class="fas fa-database mr-2"></i> قواعد البيانات</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>MongoDB</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>PostgreSQL</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>MySQL</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Firebase</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قسم أدوات أخرى -->
+                    <div class="skill-category">
+                        <h3><i class="fas fa-tools mr-2"></i> أدوات أخرى</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Git</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Docker</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>AWS</span>
+                                <span>70%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>CI/CD</span>
+                                <span>72%</span>
+                            </div>
+                            <div class="skill-bar-container">
+                                <div class="skill-bar" style="width: 72%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-indicator">
+                    <a href="#projects" @click="scrollToSection('projects')" class="text-gray-400 hover:text-accent">
+                        <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
-         <!-- Featured Hero Gallery -->
-    <section class="gallery-section">
-        <div class="section-header">
-            <h2 class="section-title">Featured Shows</h2>
-            <button class="play-pause">
-                <svg viewBox="0 0 24 24">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
-                </svg>
-            </button>
-        </div>
-        
-        <div class="gallery-container">
-            <!-- Item 1 -->
-            <div class="gallery-item" data-bg-color="#1a1a2e">
-                <div class="gallery-item-content" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2056&q=80')">
-                    <div class="item-info">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Apple_TV_plus_logo.svg/1200px-Apple_TV_plus_logo.svg.png" alt="Show Logo" class="item-logo">
-                        <p class="item-description">A brilliant, seductive chef turns to espionage in Napoleon-era France in this thrilling new drama.</p>
-                        <div class="item-meta">
-                            <span class="item-genre">Drama</span>
-                            <span class="item-tagline">New Episode Every Friday</span>
-                        </div>
-                        <button class="item-button">Stream Now</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 2 -->
-            <div class="gallery-item" data-bg-color="#16213e">
-                <div class="gallery-item-content" style="background-image: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80')">
-                    <div class="item-info">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Apple_TV_plus_logo.svg/1200px-Apple_TV_plus_logo.svg.png" alt="Show Logo" class="item-logo">
-                        <p class="item-description">Seth Rogen dives into the wild chaos of Hollywood in this all-star satire about the entertainment industry.</p>
-                        <div class="item-meta">
-                            <span class="item-genre">Comedy</span>
-                            <span class="item-tagline">New Episode Every Wednesday</span>
-                        </div>
-                        <button class="item-button">Stream Now</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="gallery-nav">
-            <button class="nav-button prev">
-                <svg viewBox="0 0 24 24">
-                    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path>
-                </svg>
-            </button>
-            <button class="nav-button next">
-                <svg viewBox="0 0 24 24">
-                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path>
-                </svg>
-            </button>
-        </div>
-        
-        <div class="gallery-dots">
-            <div class="dot active" data-index="0"></div>
-            <div class="dot" data-index="1"></div>
-        </div>
-    </section>
-
-    <!-- Recommended Shows Section -->
-    <section class="recommended-section">
-        <h3 class="recommended-title">Recommended For You</h3>
-        <div class="recommended-container">
-            <!-- Recommended Item 1 -->
-            <div class="recommended-item">
-                <div class="recommended-poster" style="background-image: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="recommended-info">
-                    <h4 class="recommended-name">The Morning Show</h4>
-                    <div class="recommended-meta">Drama • Season 3</div>
-                </div>
-            </div>
-            
-            <!-- Recommended Item 2 -->
-            <div class="recommended-item">
-                <div class="recommended-poster" style="background-image: url('https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80')"></div>
-                <div class="recommended-info">
-                    <h4 class="recommended-name">Severance</h4>
-                    <div class="recommended-meta">Sci-Fi • Season 1</div>
-                </div>
-            </div>
-            
-            <!-- Recommended Item 3 -->
-            <div class="recommended-item">
-                <div class="recommended-poster" style="background-image: url('https://images.unsplash.com/photo-1616530940355-351fabd952a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1935&q=80')"></div>
-                <div class="recommended-info">
-                    <h4 class="recommended-name">Ted Lasso</h4>
-                    <div class="recommended-meta">Comedy • Season 3</div>
-                </div>
-            </div>
-            
-            <!-- Recommended Item 4 -->
-            <div class="recommended-item">
-                <div class="recommended-poster" style="background-image: url('https://images.unsplash.com/photo-1637858868799-7f26a0640eb6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80')"></div>
-                <div class="recommended-info">
-                    <h4 class="recommended-name">Foundation</h4>
-                    <div class="recommended-meta">Sci-Fi • Season 2</div>
-                </div>
-            </div>
-            
-            <!-- Recommended Item 5 -->
-            <div class="recommended-item">
-                <div class="recommended-poster" style="background-image: url('https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80')"></div>
-                <div class="recommended-info">
-                    <h4 class="recommended-name">For All Mankind</h4>
-                    <div class="recommended-meta">Drama • Season 4</div>
-                </div>
-            </div>
-            
-            <!-- Recommended Item 6 -->
-            <div class="recommended-item">
-                <div class="recommended-poster" style="background-image: url('https://images.unsplash.com/photo-1608889825103-eb5b37773147?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80')"></div>
-                <div class="recommended-info">
-                    <h4 class="recommended-name">Slow Horses</h4>
-                    <div class="recommended-meta">Thriller • Season 2</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">مهاراتي</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div v-for="skill in skills" :key="skill.name" 
-                         class="apple-card p-6 text-center">
-                        <div class="text-4xl mb-4" :class="skill.iconColor">
-                            <i :class="skill.icon"></i>
-                        </div>
-                        <h3 class="text-xl font-medium mb-2">{{ skill.name }}</h3>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-appleBlack h-2 rounded-full" :style="{width: skill.level + '%'}"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="py-20 bg-appleWhite">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">أعمالي</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div v-for="project in projects" :key="project.id" 
-                         class="apple-card overflow-hidden">
-                        <img :src="project.image" :alt="project.title" class="w-full h-60 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">{{ project.title }}</h3>
-                            <p class="text-appleDarkGray mb-4">{{ project.description }}</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span v-for="tag in project.tags" 
-                                      class="bg-gray-100 text-appleDarkGray text-xs px-3 py-1 rounded-full">
-                                    {{ tag }}
-                                </span>
+        <!-- Projects Section - التصميم الجديد -->
+        <section id="projects" class="full-screen-section bg-primary">
+            <div class="container mx-auto px-6 py-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center section-title text-white">مشاريعي البرمجية</h2>
+                
+                <div class="projects-showcase">
+                    <div class="project-slider" :style="{ transform: `translateX(-${currentProject * 100}%)` }">
+                        <!-- Project 1 -->
+                        <div class="project-slide" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">
+                            <div class="project-info">
+                                <h3>منصة تطوع</h3>
+                                <p>منصة متكاملة لإدارة العمل التطوعي تربط المتطوعين مع المنظمات غير الربحية. تحتوي على نظام متقدم لإدارة المهام والتطوع والمكافآت.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">React</span>
+                                    <span class="project-tag">Node.js</span>
+                                    <span class="project-tag">MongoDB</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <a href="#" class="bg-accent text-white px-6 py-2 rounded-full hover:bg-opacity-90">عرض المشروع</a>
+                                    <a href="#" class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary">الكود المصدري</a>
+                                </div>
                             </div>
-                            <div class="flex space-x-3">
-                                <a :href="project.demoUrl" target="_blank" 
-                                   class="text-appleBlack hover:text-opacity-70">
-                                    <i class="fas fa-external-link-alt"></i> عرض
-                                </a>
-                                <a :href="project.codeUrl" target="_blank" 
-                                   class="text-appleDarkGray hover:text-appleBlack">
-                                    <i class="fab fa-github"></i> الكود
-                                </a>
+                        </div>
+                        
+                        <!-- Project 2 -->
+                        <div class="project-slide" style="background-image: url('https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">
+                            <div class="project-info">
+                                <h3>متجر ديقلبيتال</h3>
+                                <p>منصة تجارة إلكترونية متكاملة للمنتجات الرقمية مع نظام دفع آمن وإدارة محتوى متقدمة.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Vue.js</span>
+                                    <span class="project-tag">Django</span>
+                                    <span class="project-tag">PostgreSQL</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <a href="#" class="bg-accent text-white px-6 py-2 rounded-full hover:bg-opacity-90">عرض المشروع</a>
+                                    <a href="#" class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary">الكود المصدري</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Project 3 -->
+                        <div class="project-slide" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80')">
+                            <div class="project-info">
+                                <h3>منصة هدف</h3>
+                                <p>نظام إدارة أهداف شخصية وتنظيمية مع لوحات تحكم تفاعلية وتحليلات متقدمة.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">React Native</span>
+                                    <span class="project-tag">Firebase</span>
+                                    <span class="project-tag">Redux</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <a href="#" class="bg-accent text-white px-6 py-2 rounded-full hover:bg-opacity-90">عرض المشروع</a>
+                                    <a href="#" class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary">الكود المصدري</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Project 4 -->
+                        <div class="project-slide" style="background-image: url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80')">
+                            <div class="project-info">
+                                <h3>نظام إدارة مخازن</h3>
+                                <p>نظام متكامل لإدارة المخازن والمخزون مع تقارير مالية وتنبؤات بالطلب.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Angular</span>
+                                    <span class="project-tag">Spring Boot</span>
+                                    <span class="project-tag">MySQL</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <a href="#" class="bg-accent text-white px-6 py-2 rounded-full hover:bg-opacity-90">عرض المشروع</a>
+                                    <a href="#" class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary">الكود المصدري</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Project 5 -->
+                        <div class="project-slide" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">
+                            <div class="project-info">
+                                <h3>منصة تواصل</h3>
+                                <p>منصة تواصل اجتماعي متخصصة للمهنيين مع نظام مراسلة ومجموعات نقاش.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">React</span>
+                                    <span class="project-tag">GraphQL</span>
+                                    <span class="project-tag">MongoDB</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <a href="#" class="bg-accent text-white px-6 py-2 rounded-full hover:bg-opacity-90">عرض المشروع</a>
+                                    <a href="#" class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary">الكود المصدري</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Project 6 -->
+                        <div class="project-slide" style="background-image: url('https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">
+                            <div class="project-info">
+                                <h3>تطبيق ليبو للتوصيل</h3>
+                                <p>تطبيق توصيل طلبات مع نظام تتبع حيوي وإدارة سائقين.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Flutter</span>
+                                    <span class="project-tag">Node.js</span>
+                                    <span class="project-tag">Firebase</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <a href="#" class="bg-accent text-white px-6 py-2 rounded-full hover:bg-opacity-90">عرض المشروع</a>
+                                    <a href="#" class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary">الكود المصدري</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Project 7 -->
+                        <div class="project-slide" style="background-image: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')">
+                            <div class="project-info">
+                                <h3>نظام إدارة الرسائل الإدارية</h3>
+                                <p>نظام متكامل لإدارة المراسلات الرسمية في وزارة العدل مع نظام أرشفة ذكي.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Java</span>
+                                    <span class="project-tag">Spring</span>
+                                    <span class="project-tag">Oracle</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <a href="#" class="bg-accent text-white px-6 py-2 rounded-full hover:bg-opacity-90">عرض المشروع</a>
+                                    <a href="#" class="border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-primary">الكود المصدري</a>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="project-nav">
+                        <button @click="prevProject"><i class="fas fa-chevron-right"></i></button>
+                        <button @click="nextProject"><i class="fas fa-chevron-left"></i></button>
+                    </div>
+                    
+                    <div class="project-dots">
+                        <div v-for="(project, index) in projects" 
+                             :key="index" 
+                             class="project-dot" 
+                             :class="{ active: currentProject === index }"
+                             @click="goToProject(index)"></div>
+                    </div>
+                </div>
+                
+                <div class="scroll-indicator">
+                    <a href="#experience" @click="scrollToSection('experience')" class="text-gray-400 hover:text-accent">
+                        <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="py-20 bg-white">
+        <section id="experience" class="full-screen-section bg-secondary flex items-center">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">خبراتي</h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center section-title text-white">خبراتي العملية</h2>
                 <div class="relative max-w-3xl mx-auto">
                     <!-- Timeline -->
-                    <div class="absolute left-1/2 h-full w-0.5 bg-gray-300 transform -translate-x-1/2"></div>
+                    <div class="absolute left-1/2 h-full w-0.5 bg-gray-700 transform -translate-x-1/2"></div>
                     
                     <!-- Experience 1 -->
                     <div class="mb-12 relative">
                         <div class="timeline-dot"></div>
                         <div class="ml-0 md:ml-16 pl-8 md:pl-16">
-                            <div class="apple-card p-6">
-                                <h3 class="text-xl font-semibold">مصمم واجهات مستخدم</h3>
-                                <h4 class="text-appleDarkGray mb-2">شركة آبل</h4>
+                            <div class="tech-card p-6">
+                                <h3 class="text-xl font-semibold text-white">مهندس برمجيات رئيسي</h3>
+                                <h4 class="text-gray-400 mb-2">شركة تكنولوجيا</h4>
                                 <p class="text-gray-500">2022 - الحاضر</p>
-                                <p class="mt-2 text-appleDarkGray">تصميم واجهات مستخدم لتطبيقات iOS مع الحفاظ على المبادئ التوجيهية لتصميم آبل.</p>
+                                <p class="mt-2 text-gray-400">
+                                    - قيادة فريق تطوير مكون من 5 مهندسين<br>
+                                    - تصميم وتنفيذ بنية النظام الخلفي القابل للتطوير<br>
+                                    - تحسين أداء النظام بنسبة 40%
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -601,11 +880,15 @@
                     <div class="mb-12 relative">
                         <div class="timeline-dot"></div>
                         <div class="ml-0 md:ml-16 pl-8 md:pl-16">
-                            <div class="apple-card p-6">
-                                <h3 class="text-xl font-semibold">مطور واجهات أمامية</h3>
-                                <h4 class="text-appleDarkGray mb-2">استوديو تصميم</h4>
+                            <div class="tech-card p-6">
+                                <h3 class="text-xl font-semibold text-white">مطور برمجيات</h3>
+                                <h4 class="text-gray-400 mb-2">شركة حلول رقمية</h4>
                                 <p class="text-gray-500">2020 - 2022</p>
-                                <p class="mt-2 text-appleDarkGray">تطوير واجهات ويب تفاعلية مع التركيز على البساطة والأداء.</p>
+                                <p class="mt-2 text-gray-400">
+                                    - تطوير واجهات مستخدم تفاعلية باستخدام React.js<br>
+                                    - تنفيذ وحدات خلفية باستخدام Node.js<br>
+                                    - المساهمة في تحسين جودة الكود بنسبة 30%
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -614,76 +897,93 @@
                     <div class="mb-12 relative">
                         <div class="timeline-dot"></div>
                         <div class="ml-0 md:ml-16 pl-8 md:pl-16">
-                            <div class="apple-card p-6">
-                                <h3 class="text-xl font-semibold">مصمم جرافيك</h3>
-                                <h4 class="text-appleDarkGray mb-2">وكالة إعلانية</h4>
+                            <div class="tech-card p-6">
+                                <h3 class="text-xl font-semibold text-white">مبرمج متدرب</h3>
+                                <h4 class="text-gray-400 mb-2">شركة برمجيات</h4>
                                 <p class="text-gray-500">2018 - 2020</p>
-                                <p class="mt-2 text-appleDarkGray">تصميم هويات بصرية ومواد تسويقية للعملاء.</p>
+                                <p class="mt-2 text-gray-400">
+                                    - تطوير تطبيقات ويب صغيرة باستخدام JavaScript<br>
+                                    - تعلم مبادئ هندسة البرمجيات وأفضل الممارسات<br>
+                                    - المشاركة في مشاريع فريقية باستخدام Git
+                                </p>
                             </div>
                         </div>
                     </div>
+                </div>
+                
+                <div class="scroll-indicator">
+                    <a href="#contact" @click="scrollToSection('contact')" class="text-gray-400 hover:text-accent">
+                        <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 bg-appleBlack text-white">
+        <section id="contact" class="full-screen-section bg-primary flex items-center">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">تواصل معي</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 section-title text-white">تواصل معي</h2>
                 <div class="flex flex-col md:flex-row gap-10">
                     <div class="md:w-1/2">
                         <form @submit.prevent="submitForm" class="space-y-6">
                             <div>
-                                <label for="name" class="block mb-2">الاسم الكامل</label>
-                                <input type="text" id="name" v-model="form.name" 
-                                       class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:border-white">
+                                <label for="name" class="block mb-2 text-gray-300">الاسم الكامل</label>
+                                <input type="text" id="name" v-model="form.name" required
+                                       class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-accent text-white">
                             </div>
                             <div>
-                                <label for="email" class="block mb-2">البريد الإلكتروني</label>
-                                <input type="email" id="email" v-model="form.email" 
-                                       class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:border-white">
+                                <label for="email" class="block mb-2 text-gray-300">البريد الإلكتروني</label>
+                                <input type="email" id="email" v-model="form.email" required
+                                       class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-accent text-white">
                             </div>
                             <div>
-                                <label for="message" class="block mb-2">الرسالة</label>
-                                <textarea id="message" v-model="form.message" rows="5"
-                                       class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 focus:outline-none focus:border-white"></textarea>
+                                <label for="message" class="block mb-2 text-gray-300">الرسالة</label>
+                                <textarea id="message" v-model="form.message" rows="5" required
+                                       class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:border-accent text-white"></textarea>
                             </div>
                             <button type="submit" 
-                                    class="bg-white text-appleBlack px-8 py-3 rounded-full font-medium hover:bg-opacity-90 transition duration-300">
+                                    class="bg-accent text-white px-8 py-3 rounded-full font-medium hover:bg-opacity-90 transition duration-300">
                                 إرسال الرسالة
                             </button>
                         </form>
                     </div>
                     <div class="md:w-1/2">
-                        <div class="bg-gray-900 p-8 rounded-xl h-full">
-                            <h3 class="text-2xl font-semibold mb-6">معلومات التواصل</h3>
+                        <div class="bg-gray-800 p-8 rounded-xl h-full border border-gray-700">
+                            <h3 class="text-2xl font-semibold mb-6 text-white">طرق التواصل</h3>
                             <div class="space-y-4">
                                 <div class="flex items-start">
                                     <i class="fas fa-envelope mt-1 mr-4 text-gray-400"></i>
                                     <div>
-                                        <h4 class="font-medium">البريد الإلكتروني</h4>
-                                        <a href="mailto:h.abouminyar@uot.edu.ly" class="text-gray-300 hover:text-white">h.abouminyar@uot.edu.ly</a>
+                                        <h4 class="font-medium text-gray-300">البريد الإلكتروني</h4>
+                                        <a href="mailto:h.engineer@example.com" class="text-gray-400 hover:text-accent">h.engineer@example.com</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
                                     <i class="fas fa-phone-alt mt-1 mr-4 text-gray-400"></i>
                                     <div>
-                                        <h4 class="font-medium">الهاتف</h4>
-                                        <a href="tel:0924214929" class="text-gray-300 hover:text-white">0924214929</a>
+                                        <h4 class="font-medium text-gray-300">الهاتف</h4>
+                                        <a href="tel:+1234567890" class="text-gray-400 hover:text-accent">+123 456 7890</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
                                     <i class="fab fa-github mt-1 mr-4 text-gray-400"></i>
                                     <div>
-                                        <h4 class="font-medium">GitHub</h4>
-                                        <a href="https://github.com/yourusername" target="_blank" class="text-gray-300 hover:text-white">github.com/yourusername</a>
+                                        <h4 class="font-medium text-gray-300">GitHub</h4>
+                                        <a href="https://github.com/hasan-engineer" target="_blank" class="text-gray-400 hover:text-accent">github.com/hasan-engineer</a>
                                     </div>
                                 </div>
                                 <div class="flex items-start">
                                     <i class="fab fa-linkedin mt-1 mr-4 text-gray-400"></i>
                                     <div>
-                                        <h4 class="font-medium">LinkedIn</h4>
-                                        <a href="https://linkedin.com/in/yourusername" target="_blank" class="text-gray-300 hover:text-white">linkedin.com/in/yourusername</a>
+                                        <h4 class="font-medium text-gray-300">LinkedIn</h4>
+                                        <a href="https://linkedin.com/in/hasan-engineer" target="_blank" class="text-gray-400 hover:text-accent">linkedin.com/in/hasan-engineer</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-map-marker-alt mt-1 mr-4 text-gray-400"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-300">الموقع</h4>
+                                        <span class="text-gray-400">طرابلس، ليبيا</span>
                                     </div>
                                 </div>
                             </div>
@@ -694,37 +994,37 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-appleBlack text-white py-8 border-t border-gray-800">
+        <footer class="bg-secondary text-white py-8 border-t border-gray-800">
             <div class="container mx-auto px-6">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="mb-4 md:mb-0">
-                        <h3 class="text-xl font-semibold">Hasan Abouminyar</h3>
-                        <p class="text-gray-400 mt-1">مصمم واجهات وتجربة مستخدم</p>
+                        <h3 class="text-xl font-semibold">حسن أبو مينيار</h3>
+                        <p class="text-gray-400 mt-1">مهندس برمجيات متخصص</p>
                     </div>
                     <div class="flex space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-white text-lg">
+                        <a href="https://github.com/hasan-engineer" target="_blank" class="text-gray-400 hover:text-white text-lg">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white text-lg">
+                        <a href="https://linkedin.com/in/hasan-engineer" target="_blank" class="text-gray-400 hover:text-white text-lg">
                             <i class="fab fa-linkedin"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white text-lg">
+                        <a href="https://twitter.com/hasan_engineer" target="_blank" class="text-gray-400 hover:text-white text-lg">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover:text-white text-lg">
-                            <i class="fab fa-instagram"></i>
+                        <a href="https://medium.com/@hasan_engineer" target="_blank" class="text-gray-400 hover:text-white text-lg">
+                            <i class="fab fa-medium"></i>
                         </a>
                     </div>
                 </div>
                 <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                    <p>&copy; 2023 Hasan Abouminyar. جميع الحقوق محفوظة.</p>
+                    <p>&copy; 2023 حسن أبو مينيار. جميع الحقوق محفوظة.</p>
                 </div>
             </div>
         </footer>
 
         <!-- Back to Top Button -->
         <button v-if="showBackToTop" @click="scrollToTop" 
-                class="fixed bottom-8 right-8 bg-appleBlack text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-opacity-90 transition duration-300 border border-gray-700">
+                class="fixed bottom-8 right-8 bg-accent text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-opacity-90 transition duration-300 border border-gray-700 z-50">
             <i class="fas fa-arrow-up"></i>
         </button>
     </div>
@@ -742,58 +1042,22 @@
                 });
                 const activeSection = ref('home');
                 const showBackToTop = ref(false);
+                const currentProject = ref(0);
                 
                 const navigation = ref([
                     { id: 'home', name: 'الرئيسية', link: '#home' },
                     { id: 'skills', name: 'المهارات', link: '#skills' },
-                    { id: 'projects', name: 'الأعمال', link: '#projects' },
+                    { id: 'projects', name: 'المشاريع', link: '#projects' },
                     { id: 'experience', name: 'الخبرة', link: '#experience' },
                     { id: 'contact', name: 'التواصل', link: '#contact' }
                 ]);
                 
-                const skills = ref([
-                    { name: 'UI/UX Design', icon: 'fas fa-pencil-ruler', iconColor: 'text-gray-600', level: 95 },
-                    { name: 'Figma', icon: 'fab fa-figma', iconColor: 'text-purple-500', level: 90 },
-                    { name: 'SwiftUI', icon: 'fab fa-apple', iconColor: 'text-gray-400', level: 85 },
-                    { name: 'HTML/CSS', icon: 'fab fa-html5', iconColor: 'text-orange-500', level: 90 },
-                    { name: 'JavaScript', icon: 'fab fa-js', iconColor: 'text-yellow-500', level: 80 },
-                    { name: 'Vue.js', icon: 'fab fa-vuejs', iconColor: 'text-green-500', level: 75 },
-                    { name: 'Adobe CC', icon: 'fas fa-palette', iconColor: 'text-blue-500', level: 85 },
-                    { name: 'Prototyping', icon: 'fas fa-mobile-alt', iconColor: 'text-gray-500', level: 90 }
-                ]);
-                
                 const projects = ref([
-                    {
-                        id: 1,
-                        title: 'تطبيق الموسيقى',
-                        description: 'تصميم واجهة تطبيق موسيقى مستوحى من Apple Music',
-                        tags: ['Figma', 'SwiftUI', 'Prototype'],
-                        image: 'https://images.unsplash.com/photo-1619983081593-e2ba5b543168?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-                        demoUrl: '#',
-                        codeUrl: '#'
-                    },
-                    {
-                        id: 2,
-                        title: 'موقع محفظة أعمال',
-                        description: 'تصميم نظيف وبسيط لموقع محفظة أعمال',
-                        tags: ['UI Design', 'HTML/CSS', 'Responsive'],
-                        image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80',
-                        demoUrl: '#',
-                        codeUrl: '#'
-                    },
-                    {
-                        id: 3,
-                        title: 'نظام إدارة المهام',
-                        description: 'واجهة مستخدم لنظام إدارة المهام اليومية',
-                        tags: ['UX Design', 'Figma', 'User Flow'],
-                        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-                        demoUrl: '#',
-                        codeUrl: '#'
-                    }
+                    {}, {}, {}, {}, {}, {}, {} // 7 مشاريع كما في HTML
                 ]);
                 
                 const submitForm = () => {
-                    alert(`شكراً ${form.value.name}، تم استلام رسالتك وسنقوم بالرد عليك قريباً!`);
+                    alert(`شكراً ${form.value.name}، تم استلام رسالتك وسأتواصل معك قريباً!`);
                     form.value = { name: '', email: '', message: '' };
                 };
                 
@@ -819,6 +1083,18 @@
                     });
                 };
                 
+                const nextProject = () => {
+                    currentProject.value = (currentProject.value + 1) % projects.value.length;
+                };
+                
+                const prevProject = () => {
+                    currentProject.value = (currentProject.value - 1 + projects.value.length) % projects.value.length;
+                };
+                
+                const goToProject = (index) => {
+                    currentProject.value = index;
+                };
+                
                 const handleScroll = () => {
                     showBackToTop.value = window.scrollY > 300;
                     
@@ -835,13 +1111,36 @@
                     activeSection.value = currentSection || 'home';
                 };
                 
+                // Auto slide for projects
+                let slideInterval;
+                
+                const startSlideShow = () => {
+                    slideInterval = setInterval(() => {
+                        nextProject();
+                    }, 5000);
+                };
+                
                 onMounted(() => {
                     window.addEventListener('scroll', handleScroll);
                     handleScroll();
+                    startSlideShow();
+                    
+                    // Generate random floating icons
+                    const floatingIcons = document.querySelectorAll('.floating-icons i');
+                    floatingIcons.forEach(icon => {
+                        const duration = Math.random() * 10 + 10;
+                        const delay = Math.random() * 5;
+                        const x = (Math.random() * 40 - 20) + 'px';
+                        const y = (Math.random() * 40 - 20) + 'px';
+                        
+                        icon.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
+                        icon.style.transform = `translate(${x}, ${y})`;
+                    });
                 });
                 
                 onUnmounted(() => {
                     window.removeEventListener('scroll', handleScroll);
+                    clearInterval(slideInterval);
                 });
                 
                 return {
@@ -849,134 +1148,19 @@
                     form,
                     activeSection,
                     showBackToTop,
+                    currentProject,
                     navigation,
-                    skills,
                     projects,
                     submitForm,
                     toggleMenu,
                     scrollToSection,
-                    scrollToTop
+                    scrollToTop,
+                    nextProject,
+                    prevProject,
+                    goToProject
                 };
             }
         }).mount('#app');
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Featured Gallery Functionality
-            const gallery = document.querySelector('.gallery-container');
-            const items = document.querySelectorAll('.gallery-item');
-            const dots = document.querySelectorAll('.dot');
-            const prevBtn = document.querySelector('.prev');
-            const nextBtn = document.querySelector('.next');
-            const playPauseBtn = document.querySelector('.play-pause');
-            
-            let currentIndex = 0;
-            let autoScroll = true;
-            let interval;
-            const itemWidth = 100; // 100vw
-            
-            function startAutoScroll() {
-                interval = setInterval(() => {
-                    if (autoScroll) {
-                        nextSlide();
-                    }
-                }, 5000);
-            }
-            
-            startAutoScroll();
-            
-            function updateGallery() {
-                gallery.style.transform = `translateX(-${currentIndex * itemWidth}vw)`;
-                
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
-                
-                document.body.style.backgroundColor = items[currentIndex].getAttribute('data-bg-color');
-            }
-            
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % items.length;
-                updateGallery();
-            }
-            
-            function prevSlide() {
-                currentIndex = (currentIndex - 1 + items.length) % items.length;
-                updateGallery();
-            }
-            
-            nextBtn.addEventListener('click', () => {
-                nextSlide();
-                resetAutoScroll();
-            });
-            
-            prevBtn.addEventListener('click', () => {
-                prevSlide();
-                resetAutoScroll();
-            });
-            
-            dots.forEach(dot => {
-                dot.addEventListener('click', () => {
-                    currentIndex = parseInt(dot.getAttribute('data-index'));
-                    updateGallery();
-                    resetAutoScroll();
-                });
-            });
-            
-            playPauseBtn.addEventListener('click', () => {
-                autoScroll = !autoScroll;
-                
-                if (autoScroll) {
-                    playPauseBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>';
-                    startAutoScroll();
-                } else {
-                    playPauseBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg>';
-                    clearInterval(interval);
-                }
-            });
-            
-            function resetAutoScroll() {
-                clearInterval(interval);
-                if (autoScroll) {
-                    startAutoScroll();
-                }
-            }
-            
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            gallery.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, false);
-            
-            gallery.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, false);
-            
-            function handleSwipe() {
-                if (touchEndX < touchStartX - 50) {
-                    nextSlide();
-                    resetAutoScroll();
-                }
-                
-                if (touchEndX > touchStartX + 50) {
-                    prevSlide();
-                    resetAutoScroll();
-                }
-            }
-            
-            // Recommended items hover effect
-            const recommendedItems = document.querySelectorAll('.recommended-item');
-            recommendedItems.forEach(item => {
-                item.addEventListener('mouseenter', () => {
-                    item.querySelector('.recommended-poster').style.transform = 'scale(1.05)';
-                });
-                item.addEventListener('mouseleave', () => {
-                    item.querySelector('.recommended-poster').style.transform = 'scale(1)';
-                });
-            });
-        });
     </script>
 </body>
 </html>
